@@ -8,9 +8,6 @@
   <!-- ========================================== -->
   <!-- OPEN GRAPH META TAGS FOR WHATSAPP PREVIEW -->
   <!-- ========================================== -->
-  <!-- IMPORTANT: Replace "https://your-site-name.netlify.app" with your actual Netlify URL -->
-  <!-- IMPORTANT: Make sure your image is named "preview.jpg" and is in the same folder as this file -->
-  
   <meta property="og:title" content="Barat Invitation – Fiza & Waleed" />
   <meta property="og:description" content="You are cordially invited to the Barat of Fiza & Waleed. Click to open the invitation." />
   <meta property="og:image" content="https://fizabarat.netlify.app/preview.jpg" />
@@ -20,7 +17,6 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Fiza & Waleed Barat" />
 
-  <!-- Twitter Meta Tags (Optional but recommended) -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Barat Invitation – Fiza & Waleed" />
   <meta name="twitter:description" content="You are cordially invited to the Barat of Fiza & Waleed." />
@@ -842,7 +838,6 @@
   </style>
 </head>
 <body>
-  <!-- Audio Element for Music -->
   <audio id="bg-music" src="export_1794846488013.mp3" preload="auto"></audio>
 
   <div class="loader" id="loader">
@@ -856,7 +851,6 @@
   <div class="frame"><i>❦</i><i>❦</i><i>❦</i><i>❦</i></div>
   <div class="valance"></div>
   
-  <!-- Top Blessing Text -->
   <div class="top-blessing-container">
     <div class="top-blessing en">With the blessings<br>of Almighty Allah</div>
     <div class="top-blessing ur" dir="rtl">اللہ تعالیٰ کے فضل و کرم سے</div>
@@ -887,10 +881,8 @@
   <main>
     <article class="card">
       
-      <!-- Hero Section with Floral Arch and Couple -->
       <div class="hero-section">
         <img class="floral-bg" src="1e8604d1-9984-4582-a6eb-9a1747957d7d-removebg-preview.png" alt="Red Rose Floral Arch">
-        
         <img class="couple-img" src="Gemini_Generated_Image_380kpf380kpf380k-removebg-preview.png" alt="Royal Barat Couple">
       </div>
 
@@ -963,7 +955,6 @@
     var audio = document.getElementById('bg-music');
     var isPlaying = false;
 
-    // Function to open the invitation and play music
     function openInvitation() {
       if (!isPlaying) {
         b.classList.add('open');
@@ -977,12 +968,9 @@
     document.getElementById('open').onclick = openInvitation;
     document.getElementById('open2').onclick = openInvitation;
 
-    // When music ends, close the curtains and reset
     audio.onended = function() {
-      b.classList.remove('open'); // This triggers the curtains to close
+      b.classList.remove('open');
       isPlaying = false;
-      
-      // Optional: Reset scroll position
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -995,7 +983,6 @@
     document.getElementById('ur').onclick = function() { setLang(true) };
     try { if(sessionStorage.getItem('l') === 'ur') setLang(true) } catch(e) {}
 
-    // scroll reveal
     var io = new IntersectionObserver(function(es) {
       es.forEach(function(e) {
         if(e.isIntersecting) {
@@ -1010,7 +997,6 @@
       io.observe(el);
     });
 
-    // petals + sparkles
     var pt = document.getElementById('petals');
     for(var i = 0; i < 24; i++) {
       var p = document.createElement('i');
@@ -1022,7 +1008,6 @@
       pt.appendChild(p);
     }
 
-    // progress bar + hint
     var pr = document.getElementById('prog'), hn = document.getElementById('hint');
     function onS() {
       var h = document.documentElement.scrollHeight - innerHeight;
@@ -1031,23 +1016,43 @@
     }
     addEventListener('scroll', onS, { passive: true });
 
-    // countdown
-    var T = new Date(2026, 11, 26, 18, 0, 0).getTime();
-    function tick() {
-      var d = Math.max(0, T - Date.now()), v = {
-        d: Math.floor(d / 864e5),
-        h: Math.floor(d % 864e5 / 36e5),
-        m: Math.floor(d % 36e5 / 6e4),
-        s: Math.floor(d % 6e4 / 1e3)
-      };
-      document.querySelectorAll('[data-u]').forEach(function(e) {
-        e.textContent = v[e.dataset.u];
-      });
-    }
-    tick();
-    setInterval(tick, 1000);
+    // ==========================================
+    // WORKING COUNTDOWN TIMER
+    // ==========================================
+    // Target date: December 26, 2026 at 18:00:00 (6:00 PM)
+    var countDownDate = new Date("Dec 26, 2026 18:00:00").getTime();
 
-    // fairy lights
+    function updateTimer() {
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+
+      // Calculate days, hours, minutes, seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // If the count down is over, show zeros
+      if (distance < 0) {
+        days = 0;
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+      }
+
+      // Update all elements with the data-u attributes
+      document.querySelectorAll('[data-u="d"]').forEach(function(el) { el.textContent = days; });
+      document.querySelectorAll('[data-u="h"]').forEach(function(el) { el.textContent = hours; });
+      document.querySelectorAll('[data-u="m"]').forEach(function(el) { el.textContent = minutes; });
+      document.querySelectorAll('[data-u="s"]').forEach(function(el) { el.textContent = seconds; });
+    }
+
+    // Run immediately and then every second
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // ==========================================
+
     function fairy() {
       var f = document.getElementById('fairy'), w = innerWidth, h = innerHeight,
           ns = 'http://www.w3.org/2000/svg',
@@ -1099,7 +1104,6 @@
     addEventListener('resize', function() { clearTimeout(rt); rt = setTimeout(fairy, 200); });
     fairy();
 
-    // loader
     var ld = document.getElementById('loader'), bar = ld.querySelector('.lb i'),
         pc = document.getElementById('pc'), pg = 0, done = false, t0 = Date.now();
     function setP(v) {
